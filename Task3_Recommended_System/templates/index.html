@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product Recommendation System</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="container">
+    <h1>🛍️ Product Recommendation System</h1>
+
+    <form method="POST">
+        <label>Select Product Category</label>
+        <select name="category" id="category" onchange="changeExample()" required>
+            <option value="" disabled selected>-- Select Category --</option>
+            {% for cat in categories %}
+                <option value="{{ cat }}">{{ cat }}</option>
+            {% endfor %}
+        </select>
+
+        <label>Enter Your Requirement</label>
+        <textarea id="desc" name="description"
+                  placeholder="Please select a category first"
+                  required></textarea>
+
+        <button type="submit">Recommend</button>
+    </form>
+
+    {% if recommendations %}
+        <h2>Recommended Products</h2>
+        {% for item in recommendations %}
+            <div class="card">
+                <h3>{{ item.product }}</h3>
+                <p>{{ item.description }}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<script>
+const examples = 
+{
+    "Laptop": "Example: lightweight laptop with SSD for office work",
+    "Mobile": "Example: Budget android phone with good camera",
+    "Headphones": "Example: Wireless headphones with noise cancellation",
+    "Smartwatch": "Example: Fitness smartwatch with heart rate tracking",
+    "Speaker": "Example: Portable bluetooth speaker with strong bass"
+};
+
+function changeExample() 
+{
+    const category = document.getElementById("category").value;
+    const desc = document.getElementById("desc");
+
+    if (!category) 
+    {
+        desc.placeholder = "Please select a category first";
+        desc.value = "";
+    } 
+    else 
+    {
+        desc.placeholder = examples[category];
+    }
+}
+</script>
+
+</body>
+</html>
